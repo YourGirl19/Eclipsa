@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ECLIPSA - Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="http://webthemez.com" />
+    <!-- css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <link href="css/jcarousel.css" rel="stylesheet" />
+    <link href="css/flexslider.css" rel="stylesheet" />
+    <link href="js/owl-carousel/owl.carousel.css" rel="stylesheet"> 
+    <link href="css/style.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background: url('img/fondo.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #b0b0d9;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px;
+            border-right: 2px solid #b0b0d9;
+            position: relative;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            justify-content: space-between;
+        }
+
+        .right-panel div {
+            flex: 1;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            height: 45%;
+        }
+
+        .img-full {
+            max-width: 100%;
+            max-height: 80%;
+            object-fit: contain;
+            position: relative;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            margin: 10px;
+            background-color: #4c4ca1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 150px;
+        }
+
+        .btn-custom:hover {
+            background-color: #1a1a5e;
+        }
+
+        #options {
+            display: none;
+            text-align: center;
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+            text-align: center;
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+
+        .interactive-area {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            z-index: 20;
+            white-space: nowrap;
+        }
+        
+        /* Estilo del menú de experimentos */
+        .experiment-menu {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            position: absolute;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 30; /* Asegurarse de que esté por encima de otros elementos */
+        }
+
+        .experiment-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .experiment-menu ul li {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .experiment-menu ul li:hover {
+            background-color: #4c4ca1;
+        }
+    </style>
+
+    <script>
+        function showOptions() {
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("liverButton").style.display = "block";
+            document.getElementById("musclesButton").style.display = "block";
+            document.getElementById("options").style.display = "block";
+        }
+
+        function showLiverImage() {
+            document.getElementById("miceImage").src = "img/mice3.png";
+            document.getElementById("backArrow").style.display = "block";
+            hideTooltips();
+            hideExperimentMenu(); // Oculta el menú de experimentos
+        }
+
+        function showMusclesImage() {
+            document.getElementById("miceImage").src = "img/mice2.png";
+            document.getElementById("backArrow").style.display = "block";
+            hideTooltips();
+            hideExperimentMenu(); // Oculta el menú de experimentos
+        }
+
+        function goBack() {
+            document.getElementById("miceImage").src = "img/mice1.png";
+            document.getElementById("backArrow").style.display = "none";
+            document.getElementById("liverButton").style.display = "none";
+            document.getElementById("musclesButton").style.display = "none";
+            document.getElementById("options").style.display = "none";
+            hideTooltips();
+            hideExperimentMenu(); // Oculta el menú de experimentos
+        }
+
+        // Mostrar tooltip al pasar el ratón por encima
+        function showTooltip(tooltipId, event) {
+            const tooltip = document.getElementById(tooltipId);
+            tooltip.style.display = "block";
+            tooltip.style.left = event.pageX + 'px';
+            tooltip.style.top = event.pageY - 30 + 'px';
+        }
+
+        function hideTooltip(tooltipId) {
+            document.getElementById(tooltipId).style.display = "none";
+        }
+
+        // Mostrar menú al hacer clic
+        function showExperimentMenu(event) {
+            const imageSrc = document.getElementById("miceImage").src;
+            if (imageSrc.includes("mice3.png")) { // Verificar si la imagen actual es mice3.png
+                const menu = document.getElementById("experimentMenu");
+                menu.style.display = "block";
+                menu.style.left = event.pageX + 'px';
+                menu.style.top = event.pageY + 'px';
+            }
+        }
+
+        function hideExperimentMenu() {
+            document.getElementById("experimentMenu").style.display = "none";
+        }
+
+        // Ocultar tooltips cuando se cambian las imágenes
+        function hideTooltips() {
+            const tooltips = document.getElementsByClassName("tooltip");
+            for (let i = 0; i < tooltips.length; i++) {
+                tooltips[i].style.display = "none";
+            }
+        }
+
+        // Ocultar el menú de experimentos
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById("experimentMenu");
+            if (!menu.contains(event.target) && !event.target.matches('.interactive-area')) {
+                hideExperimentMenu();
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <header>
+        <div class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/eclipsa-logo.png" alt="ECLIPSA logo" style="height: 80px;">
+                        <span style="font-size: 30px; color: #b0b0d9;">ECLIPSA</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="visualizer.html">Visualizer</a></li>
+                        <li><a href="guide.html">Guide</a></li>
+                        <li><a href="experiments.html">Experiments</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+
+
+    <div class="container">
+        <!-- Panel izquierdo ocupa mitad de la pantalla -->
+        <div class="left-panel">
+            <img id="miceImage" src="img/mice1.png" class="img-full" alt="Mouse">
+            
+            <!-- Botones debajo del panel izquierdo -->
+            <div class="btn-container">
+                <button id="startButton" class="btn-custom" onclick="showOptions()">Start</button>
+                <button class="btn-custom" onclick="showLiverImage()">Liver</button>
+                <button class="btn-custom" onclick="showMusclesImage()">Muscles</button>
+            </div>
+            
+            <div id="options">
+                <h3>Select an option:</h3>
+            </div>
+
+            <div id="backArrow" class="back-arrow" style="display: none;" onclick="goBack()">←</div>
+
+            <!-- Área interactiva para el corazón -->
+            <div class="interactive-area" style="top: 120px; left: 240px; width: 20px; height: 30px;" 
+                 onmouseover="showTooltip('heartTooltip', event)" 
+                 onmouseout="hideTooltip('heartTooltip')" 
+                 onclick="showExperimentMenu(event)">
+                <img src="img/mice3.png" alt="Mice3" style="display: none;">
+                <!-- Tooltip para el corazón -->
+                <div id="heartTooltip" class="tooltip">Corazón</div>
+            </div>
+			            <!-- Área interactiva para el hígado -->
+            <div class="interactive-area" style="top: 120px; left: 300px; width: 20px; height: 30px;" 
+                 onmouseover="showTooltip('liverTooltip', event)" 
+                 onmouseout="hideTooltip('liverTooltip')" 
+                 onclick="showExperimentMenu(event)">
+                <img src="img/mice3.png" alt="Mice3" style="display: none;">
+                <!-- Tooltip para el corazón -->
+                <div id="liverTooltip" class="tooltip">Liver</div>
+            </div>
+        </div>
+
+        <!-- Panel derecho: dos paneles uno sobre otro -->
+        <div class="right-panel">
+            <div>
+                <p>Información relacionada con la imagen o el experimento 1.</p>
+            </div>
+            <div>
+                <p>Información adicional o experimento 2.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú de experimentos para el corazón -->
+    <div id="experimentMenu" class="experiment-menu">
+        <ul>
+            <li>Experimento 1 - Corazón</li>
+            <li>Experimento 2 - Corazón</li>
+            <li>Experimento 3 - Corazón</li>
+        </ul>
+    </div>
+	    <!-- Menú de experimentos para el corazón -->
+    <div id="experimentMenu" class="experiment-menu">
+        <ul>
+            <li>Experimento 1 - Corazón</li>
+            <li>Experimento 2 - Corazón</li>
+            <li>Experimento 3 - Corazón</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

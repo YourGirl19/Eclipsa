@@ -19,82 +19,123 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+<head>
+  <style>
+    /* Fondo principal con imagen de fondo.png */
+    body {
+      background: url('img/fondo.png') no-repeat center center fixed; /* Imagen de fondo */
+      background-size: cover; /* Ajusta el fondo para que cubra la pantalla */
+      color: #b0b0d9; /* Color del texto principal */
+      margin: 0; /* Eliminar márgenes */
+    }
+
+    /* Estilo para la barra de navegación */
+    .navbar-default {
+      background-color: #000345; /* Cambiado a #000345 */
+      border-color: #000345; /* También cambió el borde al mismo color */
+    }
+
+    /* Enlaces en la barra de navegación */
+    .navbar-default .navbar-nav > li > a {
+      color: #b0b0d9; /* Color claro para el texto en la barra */
+    }
+
+    .navbar-default .navbar-nav > li.active > a,
+    .navbar-default .navbar-nav > li > a:hover {
+      background-color: #000345; /* Cambiado a #000345 */
+      color: #b0b0d9; /* Asegúrate de que el color del texto sea claro */
+    }
+
+    /* Encabezados */
+    h3 {
+      color: #b0b0d9;
+    }
+
+    /* Estilo del slider */
+    .flex-caption {
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+      color: #b0b0d9; /* Color de texto claro */
+    }
+
+    /* Botones */
+    .btn-primary {
+      background-color: #000345; /* Cambiar a #000345 */
+      border-color: #000345; /* Cambiar el borde a #000345 */
+      color: #b0b0d9; /* Color del texto en el botón */
+    }
+
+    .btn-primary:hover {
+      background-color: #4c4ca1; /* Cambiar el color en hover si es necesario */
+    }
+
+    /* Enlaces generales */
+    a {
+      color: #4c4ca1;
+    }
+
+    a:hover {
+      color: #b0b0d9;
+    }
+  </style>
 </head>
 <body>
 <div id="wrapper">
-	<!-- start header -->
-	<header>
-	<section class="contactInfo">
-	<div class="container"> 
-                   
-
-                    <div class="col-md-12"> 
-                            <div class="contact-area">
-                                <ul>
-                                    <li><i class="fa fa-phone-square"></i>812-123-456</li>
-                                    <li><i class="fa fa-envelope-o"></i>info@Delight.com</li>
-                                </ul>
-                            </div> 
-                    </div> 
-            </div>
-		</section>	
-        <div class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"/></a>
-                </div>
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">Home</a></li> 
-						<li><a href="about.html">About Us</a></li>
-						<li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
+  <!-- start header -->
+  <header>
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header"  <!-- Fondo del área del logo -->
+          <a class="navbar-brand" href="index.html">
+            <!-- Logo de ECLIPSA con tamaño ajustado -->
+            <img src="img/eclipsa-logo.png" alt="ECLIPSA logo" style="height: 80px; display: inline-block; vertical-align: middle;">
+            <!-- Nombre ECLIPSA -->
+            <span style="font-size: 30px; color: #b0b0d9; vertical-align: middle;">ECLIPSA</span>
+          </a>
         </div>
-	</header>
-	<!-- end header -->
-	<section id="featured">
-	 
-	<!-- Slider -->
-        <div id="main-slider" class="flexslider">
-            <ul class="slides">
-              <li>
-                <img src="img/slides/1.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Elegant Design</h3> 
-					<p>Doloribus omnis minus temporibus perfe.</p>  
-                </div>
-              </li>
-              <li>
-                <img src="img/slides/2.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Multi-purpose Theme</h3> 
-					<p>Lorem ipsum dolor sit amet, consectetur adip.</p> 
-                </div>
-              </li>
-              <li>
-                <img src="img/slides/3.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Fully Responsive</h3> 
-					<p>Lorem ipsum dolor sit amet, consectetur..</p>  
-                </div>
-              </li>
-            </ul>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="visualizer.html">Visualizer</a></li>
+            <li><a href="guide.html">Guide</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
         </div>
-	<!-- end slider -->
+      </div>
+    </div>
+  </header>
+  <!-- end header -->
+  
+  <section id="featured">
+    <!-- Slider -->
+    <div id="main-slider" class="flexslider">
+      <ul class="slides">
+        <li>
+          <img src="img/slides/1.jpg" alt="" />
+          <div class="flex-caption">
+            <h3>Elegant Design</h3> 
+            <p>Doloribus omnis minus temporibus perfe.</p>  
+          </div>
+        </li>
+        <li>
+          <img src="img/slides/2.jpg" alt="" />
+          <div class="flex-caption">
+            <h3>Multi-purpose Theme</h3> 
+            <p>Lorem ipsum dolor sit amet, consectetur adip.</p> 
+          </div>
+        </li>
+        <li>
+          <img src="img/slides/3.jpg" alt="" />
+          <div class="flex-caption">
+            <h3>Fully Responsive</h3> 
+            <p>Lorem ipsum dolor sit amet, consectetur..</p>  
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- end slider -->
  
 	</section> 
-		<section id="content">
-	
+	<section id="content">
 	<div class="container">
 			<div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6">
@@ -102,7 +143,7 @@
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6">
                     <div>
-					    <h2>Who We Are</h2> 
+					    <h2>WHOLA</h2> 
     					<p>Sed ut perspiciaatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur.</p>
 						<p>Sed ut perspiciaatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore Sed viverra lorem vel felis lobortis, sed aliquam augue iaculis</p>
     					<div class="row">
@@ -135,10 +176,8 @@
 				</div>
 			</div>
 		</div>
-	 
 	</section>
-	
-	
+
 	<section id="service">
             <div class="container"> 
 				<div class="row">
